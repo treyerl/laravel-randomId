@@ -43,8 +43,10 @@ trait RandomBinId {
      * @return bool
      */
 	protected function performInsert(Builder $query){
-		$this->setAttribute($this->getKeyName(), $this->generateRandomId());
-		return parent::performInsert($query);
+		$this->getConnection()->transaction(function(){
+			$this->setAttribute($this->getKeyName(), $this->generateRandomId());
+			return parent::performInsert($query);
+		});
 	}
 
 	/**
