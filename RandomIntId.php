@@ -43,7 +43,7 @@ trait RandomIntId {
      * @return bool
      */
 	protected function performInsert(Builder $query){
-		$this->getConnection()->transaction(function(){
+		$this->getConnection()->transaction(function() use($query) {
 			$this->setAttribute($this->getKeyName(), $this->generateRandomId());
 			return parent::performInsert($query);
 		});
